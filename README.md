@@ -1,6 +1,10 @@
 # pml
-Python Minecraft Launcher Library - support forge, all version
+Python Minecraft Launcher Library - crossplatform, support forge, all version
 this project is ported version from [CmlLib](https://github.com/AlphaBs/MinecraftLauncherLibrary)
+
+1.4.*
+tested : windows 10 / ubuntu(Linux)
+macOS also will work
 
 Contacts
 -------------
