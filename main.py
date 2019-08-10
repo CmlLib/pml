@@ -30,30 +30,39 @@ inputVersion = input()
 
 
 # download event handler
+# filekind : library , minecraft, index, resource
 def downloadEvent(x):
     print(x.filekind + " - " + x.filename + " - " + str(x.currentvalue) + "/" + str(x.maxvalue))
 
+
+pml.downloadEventHandler = downloadEvent
 
 # launch option
 option = mlaunchoption.launchoption()
 option.maximumRamSizeMB = 4096
 option.session = session
+# option.screenWidth = 1600
+# option.screenHeight = 900
+# option.serverIp = "127.0.0.1"
+# option.launcherName = "python_minecraft_launcher"
+# option.customJavaParameter = "-Xms1024M"
 
 
 # download profile and create argument
-pml.downloadEventHandler = downloadEvent
 args = pml.startProfile(inputVersion, option)
 
 
 # start process
-with open("args.txt", "w") as f:
+with open("args.txt", "w") as f:  # for debug
     f.write(args)
-
 print(args)
+
 mc = subprocess.Popen("java.exe " + args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=pml.getGamePath())
 
 print("launched!")
 
+
+# write output
 with mc.stdout as gameLog:
     while True:
         line = gameLog.readline()
