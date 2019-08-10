@@ -54,7 +54,7 @@ class launch:
                 libArgs.append(e(item.path))
 
         libArgs.append(e(os.path.normpath(minecraft.version + "/" + profile.id + "/" + profile.id + ".jar")))
-        args.append(";".join(libArgs))
+        args.append(os.pathsep.join(libArgs))
         args.append(self.launchOption.startProfile.mainclass)
 
         # game args
