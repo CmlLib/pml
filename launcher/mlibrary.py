@@ -1,5 +1,5 @@
 import platform
-import minecraft
+from launcher import minecraft
 import os
 
 class mlibrary:

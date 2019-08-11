@@ -1,12 +1,10 @@
-import mlogin
-import mlaunchoption
-import pml
+from launcher import pml, mlogin, mlaunchoption
 import subprocess
 import os
 
 
 # initialize
-#p = os.environ["appdata"] + "\\.minecraft"
+# p = os.environ["appdata"] + "\\.minecraft"  # windows default game directory
 p = os.getcwd() + "/game"
 pml.initialize(p)
 print("Initialized in " + pml.getGamePath())

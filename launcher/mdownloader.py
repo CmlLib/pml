@@ -1,10 +1,9 @@
 import os
 import requests
-import minecraft
+from launcher import minecraft, mevent
 import json
 from shutil import copyfile
 import hashlib
-import mevent
 
 
 def mkd(path):

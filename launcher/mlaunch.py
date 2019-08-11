@@ -1,5 +1,4 @@
-import minecraft
-import mnative
+from launcher import mnative, minecraft
 import string
 import os
 

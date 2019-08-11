@@ -1,7 +1,7 @@
-import minecraft
+from launcher import minecraft
 import zipfile
 import os
-import shutil
+
 
 class native:
     def __init__(self, _launchOption):

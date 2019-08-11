@@ -1,5 +1,5 @@
 import os
-import minecraft
+from launcher import minecraft
 import json
 import requests
 

@@ -71,3 +71,6 @@ game/
 logs/
 __pycache__
 args.txt
+build/
+dist/
+pmlauncher.egg-info

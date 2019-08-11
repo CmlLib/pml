@@ -1,7 +1,6 @@
 import requests
 import json
-import mlibrary
-import minecraft
+from launcher import minecraft, mlibrary
 import os
 
 
