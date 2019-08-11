@@ -1,4 +1,4 @@
-from launcher import minecraft
+from pmlauncher import minecraft
 import zipfile
 import os
 

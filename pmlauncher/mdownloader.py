@@ -1,6 +1,6 @@
 import os
 import requests
-from launcher import minecraft, mevent
+from pmlauncher import minecraft, mevent
 import json
 from shutil import copyfile
 import hashlib

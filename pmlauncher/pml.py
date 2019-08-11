@@ -1,4 +1,4 @@
-from launcher import minecraft, mlaunch, mdownloader, mprofile, mlaunchoption, mprofileinfo
+from pmlauncher import minecraft, mlaunch, mdownloader, mprofile, mlaunchoption, mprofileinfo
 
 profiles = None
 downloadEventHandler = None

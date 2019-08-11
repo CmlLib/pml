@@ -1,5 +1,5 @@
 import os
-from launcher import minecraft
+from pmlauncher import minecraft
 import json
 import requests
 

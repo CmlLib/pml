@@ -1,4 +1,4 @@
-from launcher import pml, mlogin, mlaunchoption
+from pmlauncher import pml, mlogin, mlaunchoption
 import subprocess
 import os
 

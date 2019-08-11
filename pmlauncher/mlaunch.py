@@ -1,4 +1,4 @@
-from launcher import mnative, minecraft
+from pmlauncher import mnative, minecraft
 import string
 import os
 
