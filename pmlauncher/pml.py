@@ -35,7 +35,8 @@ def downloadProfile(profile, downloadAssets):
         raise ValueError("profile must be mprofile.profile type")
 
     downloader = mdownloader.mdownload(profile)
-    downloader.downloadFileChangedEvent.append(downloadEventHandler)
+    if downloadEventHandler:
+        downloader.downloadFileChangedEvent.append(downloadEventHandler)
     downloader.downloadAll(downloadAssets)
 
 

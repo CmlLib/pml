@@ -10,7 +10,6 @@ class native:
     def extractNatives(self, profile):
         for item in profile.libraries:
             if item.isNative:
-                print(item.path)
                 try:
                     lib = zipfile.ZipFile(item.path)
                     lib.extractall(minecraft.natives)
