@@ -11,7 +11,6 @@ Contacts
 
 Email : ksi123456ab@naver.com  
 Discord : ksi123456ab#3719  
-KaKaoTalk : ksi123456ab
 
 License
 --------------
