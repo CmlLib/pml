@@ -29,5 +29,9 @@ Use venv
 
 How To Use
 -------------
+install :  
+
+    pip install pmlauncher
+
 check sample script
 [main.py](https://github.com/AlphaBs/pml/blob/master/main.py)
