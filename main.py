@@ -23,8 +23,7 @@ profiles = pml.updateProfiles()
 for item in profiles:
     print(item.name)
 
-print("input version : ")
-inputVersion = input()
+inputVersion = input("input version : ")
 
 
 # download event handler
