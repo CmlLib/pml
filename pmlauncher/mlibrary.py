@@ -1,5 +1,4 @@
-import platform
-from pmlauncher import minecraft
+from pmlauncher import minecraft, mrule
 import os
 
 class mlibrary:
@@ -14,18 +13,6 @@ class mlibrary:
 
 checkOSRules = True
 defaultLibraryServer = "https://libraries.minecraft.net/"
-
-is64bit = platform.machine().endswith('64')
-osversion = platform.release()
-osname = ""
-sysname = platform.system()
-if sysname == "Linux":
-    osname = "linux"
-elif sysname == "Darwin":
-    osname = "osx"
-else:
-    osname = "windows"
-
 
 def nameToPath(name, native):  # library name to relative path
     try:
@@ -47,32 +34,6 @@ def nameToPath(name, native):  # library name to relative path
         return libpath
     except Exception:
         return ""
-
-
-def checkAllowLibrary(arr):
-    for job in arr:
-        action = True  # allow / disallow
-        containCurrentOS = True
-
-        for key, value in job.items():
-            if key == "action":
-                if value == "allow":
-                    action = True
-                else:
-                    action = False
-            elif key == "os":
-                for osKey, osValue in value.items():
-                    if osKey == "name" and osValue == osname:
-                        containCurrentOS = True
-                        break
-                containCurrentOS = False
-
-        if not action and containCurrentOS:
-            return False
-        elif action and containCurrentOS:
-            return True
-        elif action and not containCurrentOS:
-            return False
 
 
 def createLibrary(name, nativeId, job):
@@ -109,7 +70,7 @@ def parselist(json):
             # check rules
             rules = item.get("rules")
             if checkOSRules and rules:
-                isRequire = checkAllowLibrary(rules)
+                isRequire = mrule.checkAllowOS(rules)
 
                 if not isRequire:
                     continue

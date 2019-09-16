@@ -1,6 +1,6 @@
 import requests
 import json
-from pmlauncher import minecraft, mlibrary
+from pmlauncher import minecraft, mlibrary, mrule
 import os
 
 
@@ -11,23 +11,34 @@ def n(t):
         return t
 
 
+def arg_parse(arr):
+    strlist = list()
+    for item in arr:
+        if type(item) == dict:
+
+
+
 class profile:
     def __init__(self, info):
         self.id = ""
         self.assetId = ""
         self.assetUrl = ""
         self.assetHash = ""
-        self.arguments = []
+        self.jvm_arguments = []
+        self.game_arguments = []
         self.libraries = []
         self.clientDownloadUrl = ""
         self.clientHash = ""
-        self.innerJarId = ""
-        self.isForge = False
+        self.parent_profile_id = ""
+        self.is_inherted = False
+        self.jar = ""
         self.mainclass = ""
         self.minecraftArguments = ""
         self.releaseTime = ""
         self.type = ""
         self.parse(info)
+
+    
 
     def parse(self, info):
         if info.isweb:
@@ -61,17 +72,22 @@ class profile:
         self.mainclass = n(dict.get("mainClass"))
 
         self.minecraftArguments = dict.get("minecraftArguments")
-        self.arguments = dict.get("arguments")
+        arg = dict.get("arguments")
+        if arg:
+            if arg.get("game"):
+                self.game_arguments = arg_parse(arg.get("game")
+            if arg.get("jvm"):
+                self.jvm_arguments = arg_parse(arg.get("jvm")
 
         self.releaseTime = n(dict.get("releaseTime"))
         self.type = n(dict.get("type"))
 
-        jar = dict.get("jar")
-        if jar:
-            self.isForge = True
-            self.innerJarId = jar
+        inherits = dict.get("inheritsFrom")
+        if inherits:
+            self.is_inherited = True
+            self.parent_profile_id = inherits
         else:
-            self.isForge = False
+            self.jar = self.id
 
         profilePath = os.path.normpath(minecraft.version + "/" + self.id)
 
@@ -81,3 +97,8 @@ class profile:
             f = open(os.path.normpath(profilePath + "/" + self.id + ".json"), "w")
             f.write(content)
             f.close()
+
+
+def get_profile(infos, version):
+    for item in infos:
+        item.
