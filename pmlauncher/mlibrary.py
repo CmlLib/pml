@@ -82,7 +82,7 @@ def parselist(json):
 
                 nativeId = None
                 if natives is not None:  # natives != null
-                    nativeId = natives.get(osname)
+                    nativeId = natives.get(mrule.osname)
 
                 list.append(createLibrary(name, nativeId, item))
                 continue
@@ -97,8 +97,8 @@ def parselist(json):
                     nativeId = "natives-windows-64"
                 if classif.get("natives-windows-32") and osname == "windows":
                     nativeId = "natives-windows-32"
-                if classif.get("natives-" + osname):
-                    nativeId = "natives-" + osname
+                if classif.get("natives-" + mrule.osname):
+                    nativeId = "natives-" + mrule.osname
                 else:
                     isgo = False
 

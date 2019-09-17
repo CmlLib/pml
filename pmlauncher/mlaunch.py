@@ -10,6 +10,27 @@ def e(t):
     else:
         return t
 
+
+def arg_in(arg, dicts):
+    args = list()
+    for item in arg:
+        if type(item) is str:
+            if item[0] is not "$":
+                args.append(item)
+            else:
+                argValue = dicts.get(item[2:-1])  # remove ${  }
+                print(item+">"+argValue)
+                if argValue:
+                    args.append(e(argValue))
+                else:
+                    args.append(item)
+    return args
+
+
+def arg_str(arg, dicts):
+    return string.Template(arg).safe_substitute(dicts)
+
+
 class launch:
     def __init__(self, option):
         self.defaultJavaParameter = " ".join([
@@ -24,42 +45,51 @@ class launch:
         self.launchOption = option
 
     def createArg(self):
-        profile = self.launchOption.startProfile
-        hasBase = self.launchOption.baseProfile is not None
-        if hasBase:
-            profile = self.launchOption.baseProfile
+        profile = self.launchOption.start_profile
 
         args = list()
 
-        # java args
-        if self.launchOption.customJavaParameter:
-            args.append(self.launchOption.customJavaParameter)
+        # common jvm args
+        if self.launchOption.jvm_args:
+            args.append(self.launchOption.jvm_args)
         else:
             args.append(self.defaultJavaParameter)
 
-        args.append("-Xmx" + str(self.launchOption.maximumRamSizeMB) + "m")
-        args.append("-Djava.library.path=" + e(minecraft.natives))
-        args.append("-cp")
+        args.append("-Xmx" + str(self.launchOption.xmx_mb) + "m")
 
+        # specific jvm args
         libArgs = list()
 
-        if hasBase:  # forge library
-            for item in self.launchOption.startProfile.libraries:
-                if not item.isNative:
-                    libArgs.append(e(item.path))
-
-        for item in profile.libraries:  # common library
+        for item in profile.libraries:
             if not item.isNative:
                 libArgs.append(e(item.path))
 
-        libArgs.append(e(os.path.normpath(minecraft.version + "/" + profile.id + "/" + profile.id + ".jar")))
-        args.append(os.pathsep.join(libArgs))
-        args.append(self.launchOption.startProfile.mainclass)
+        libArgs.append(e(os.path.normpath(minecraft.version + "/" + profile.jar + "/" + profile.jar + ".jar")))
+        libs = os.pathsep.join(libArgs)
+
+        jvmdict = {
+            "natives_directory" : e(minecraft.natives),
+            "launcher_name" : "u",
+            "launcher_version" : "h",
+            "classpath" : libs
+        }
+
+        if profile.jvm_arguments:
+            args.append(arg_str(" ".join(profile.jvm_arguments), jvmdict))           
+        else:
+            args.extend[
+                "-Djava.library.path=",
+                e(minecraft.natives),
+                "-cp",
+                libs]
+
+
+        args.append(profile.mainclass)
 
         # game args
-        argDict = {
+        gamedict = {
             "auth_player_name" : self.launchOption.session.username,
-            "version_name" : self.launchOption.startProfile.id,
+            "version_name" : profile.id,
             "game_directory" : minecraft.path,
             "assets_root" : minecraft.assets,
             "assets_index_name" : profile.assetId,
@@ -71,33 +101,23 @@ class launch:
             "auth_session" : self.launchOption.session.access_token
         }
 
-        if self.launchOption.launcherName:
-            argDict["version_type"] = self.launchOption.launcherName
+        if self.launchOption.launcher_name:
+            gamedict["version_type"] = self.launchOption.launcher_name
         else:
-            argDict["version_type"] = profile.type
+            gamedict["version_type"] = profile.type
 
-        if self.launchOption.startProfile.arguments:  # 1.3
-            for item in self.launchOption.startProfile.arguments.get("game"):
-                if type(item) is str:
-                    if item[0] is not "$":
-                        args.append(item)
-                    else:
-                        argValue = argDict.get(item[2:-1])  # remove ${  }
-                        if argValue:
-                            args.append(e(argValue))
-                        else:
-                            args.append(item)
-        else:
-            gameArgs = string.Template(self.launchOption.startProfile.minecraftArguments).safe_substitute(argDict)
-            args.append(gameArgs)
+        if profile.game_arguments:  # 1.3
+            args.extend(arg_in(profile.game_arguments, gamedict))
+        elif profile.minecraftArguments:
+            args.append(arg_str(profile.minecraftArguments, gamedict))
 
         # options
-        if self.launchOption.serverIp:
-            args.append("--server " + self.launchOption.serverIp)
+        if self.launchOption.server_ip:
+            args.append("--server " + self.launchOption.server_ip)
 
-        if self.launchOption.screenWidth and self.launchOption.screenHeight:
-            args.append("--width " + self.launchOption.screenWidth)
-            args.append("--height ", self.launchOption.screenHeight)
+        if self.launchOption.screen_width and self.launchOption.screen_height:
+            args.append("--width " + self.launchOption.screen_width)
+            args.append("--height ", self.launchOption.screen_height)
 
         return " ".join(args)
 

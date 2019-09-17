@@ -34,19 +34,16 @@ def downloadEvent(x):
 
 pml.downloadEventHandler = downloadEvent
 
-# launch option
-option = mlaunchoption.launchoption()
-option.maximumRamSizeMB = 4096
-option.session = session
-# option.screenWidth = 1600
-# option.screenHeight = 900
-# option.serverIp = "127.0.0.1"
-# option.launcherName = "python_minecraft_launcher"
-# option.customJavaParameter = "-Xms1024M"
-
-
 # download profile and create argument
-args = pml.startProfile(inputVersion, option)
+args = pml.startProfile(inputVersion, 
+                        xmx_mb=1024,
+                        session=session,
+
+                        launcher_name="pml",  # option
+                        server_ip="",
+                        jvm_args="",
+                        screen_width=0,
+                        screen_height=0)
 
 
 # start process
@@ -55,8 +52,8 @@ with open("args.txt", "w") as f:  # for debug
 print(args)
 
 # in linux system, use os.system instead of subprocess
-# os.system("java " + args)
-mc = subprocess.Popen("java " + args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=pml.getGamePath())
+os.system("java " + args)
+#mc = subprocess.Popen("java " + args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=pml.getGamePath())
 
 print("launched!")
 

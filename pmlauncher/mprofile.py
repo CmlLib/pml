@@ -15,6 +15,21 @@ def arg_parse(arr):
     strlist = list()
     for item in arr:
         if type(item) == dict:
+            allow = True
+            
+            if item.get("rules"):
+                allow = mrule.checkAllowOS(item.get("rules"))
+
+            value = item.get("value")
+            if allow and value:
+                if type(value) == list:
+                    strlist.extend(value)
+                else:
+                    strlist.append(value)
+        else:
+            strlist.append(item)
+
+    return strlist
 
 
 
@@ -75,9 +90,9 @@ class profile:
         arg = dict.get("arguments")
         if arg:
             if arg.get("game"):
-                self.game_arguments = arg_parse(arg.get("game")
+                self.game_arguments = arg_parse(arg.get("game"))
             if arg.get("jvm"):
-                self.jvm_arguments = arg_parse(arg.get("jvm")
+                self.jvm_arguments = arg_parse(arg.get("jvm"))
 
         self.releaseTime = n(dict.get("releaseTime"))
         self.type = n(dict.get("type"))
@@ -99,6 +114,63 @@ class profile:
             f.close()
 
 
+def inhert(parent, child):
+    # Overload : assetId, assetUrl, assetHash, clientDownloadUrl, clientHash, mainClass, minecraftArguments
+    # Combine : libraries, game_arguments, jvm_arguments
+
+    if not child.assetId:
+        child.assetId = parent.assetId
+
+    if not child.assetUrl:
+        child.assetUrl = parent.assetUrl
+
+    if not child.assetHash:
+        child.assetHash = parent.assetHash
+
+    if not child.clientDownloadUrl:
+        child.clientDownloadUrl = parent.clientDownloadUrl
+
+    if not child.clientHash:
+        child.clientHash = parent.clientHash
+
+    if not child.mainClass:
+        child.mainClass = parent.mainClass
+
+    if not child.minecraftArguments:
+        child.minecraftArguments = parent.minecraftArguments
+
+    if parent.libraries:
+        if child.libraries:
+            child.libraries.extend(parent.libraries)
+        else:
+            child.libraries = parent.libraries
+
+    if parent.game_arguments:
+        if child.game_arguments:
+            child.game_arguments.extend(parent.game_arguments)
+        else:
+            child.game_arguments = parent.game_arguments
+
+    if parent.jvm_arguments:
+        if child.jvm_arguments:
+            child.jvm_arguments.extend(parent.jvm_arguments)
+        else:
+            child.jvm_arguments = parent.jvm_arguments
+
+
 def get_profile(infos, version):
+    start_profile = None
+
     for item in infos:
-        item.
+        if item.name == version:
+            start_profile = profile(item)
+            break
+    
+    if start_profile == None:
+        raise ValueError("cannot find profile named " + version)
+
+    if start_profile.is_inherted:
+        parent_profile = get_profile(infos, start_profile.parent_profile_id)
+        inhert(parent_profile, start_profile)
+
+    return start_profile

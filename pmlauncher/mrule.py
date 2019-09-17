@@ -33,8 +33,8 @@ def checkAllowOS(arr):
                         break
                 containCurrentOS = False
 
-            elif key == "feature":
-                return false
+            elif key == "features":
+                return False
 
         if not action and containCurrentOS:
             return False

@@ -17,9 +17,7 @@ class native:
                     pass
 
     def createNatives(self):
-        self.extractNatives(self.launchOption.startProfile)
-        if self.launchOption.baseProfile:
-            self.extractNatives(self.launchOption.baseProfile)
+        self.extractNatives(self.launchOption.start_profile)
 
     def cleanNatives(self):
         for item in os.listdir(minecraft.natives):

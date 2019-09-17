@@ -1,25 +1,25 @@
 class launchoption:
     def __init__(self):
-        self.maximumRamSizeMB = 1024
-        self.startProfile = None
-        self.baseProfile = None
+        self.xmx_mb = 1024
+        self.start_profile = None
         self.session = None
-        self.launcherName = ""
-        self.serverIp = ""
-        self.customJavaParameter = ""
-        self.screenWidth = 0
-        self.screenHeight = 0
+        self.launcher_name = ""
+        self.server_ip = ""
+        self.jvm_arg = ""
+        self.screen_width = 0
+        self.screen_height = 0
 
     def checkValid(self):
         exMsg = ""
-        if not self.maximumRamSizeMB:
-            exMsg = "maximumRamSize is too small"
-        if not self.startProfile:
-            exMsg = "startProfile was None"
+        if not self.xmx_mb:
+            exMsg = "xmx_mb is too small"
+        if not self.start_profile:
+            exMsg = "start_profile was None"
         if not self.session:
             exMsg = "session was None"
-        if " " in self.launcherName:
-            exMsg = "launcherName cannot contain space character"
+        if " " in self.launcher_name:
+            exMsg = "launcher_name cannot contain space character"
 
         if exMsg:
             raise ValueError(exMsg)
+

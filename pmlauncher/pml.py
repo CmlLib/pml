@@ -23,14 +23,10 @@ def getProfile(name):
     if profiles is None:
         updateProfiles()
 
-    for item in profiles:
-        if item.name == name:
-            return mprofile.profile(item)
-
-    raise ValueError("can't find profile named " + name)
+    return mprofile.get_profile(profiles, name)
 
 
-def downloadProfile(profile, downloadAssets):
+def downloadProfile(profile, downloadAssets = True):
     if type(profile) is not mprofile.profile:
         raise ValueError("profile must be mprofile.profile type")
 
@@ -40,20 +36,17 @@ def downloadProfile(profile, downloadAssets):
     downloader.downloadAll(downloadAssets)
 
 
-def startProfile(name, option):
-    if type(option) is not mlaunchoption.launchoption:
-        raise ValueError("option must be mlaunchoption.launchoption type")
-
+def startProfile(name, **option):
     profile = getProfile(name)
-    baseProfile = None
+    print(profile.jvm_arguments)
+    downloadProfile(profile)
 
-    if profile.isForge:
-        baseProfile = getProfile(profile.innerJarId)
-        downloadProfile(baseProfile, True)
-
-    downloadProfile(profile, not profile.isForge)  # if profile is forge, do not download assets
-
-    option.startProfile = profile
-    option.baseProfile = baseProfile
-    launch = mlaunch.launch(option)
+    l = mlaunchoption.launchoption()
+    if option.get("launchoption"):
+        l = option.get("launchoption")
+    else:
+        l.__dict__.update(option)
+    
+    l.start_profile = profile
+    launch = mlaunch.launch(l)
     return launch.createProcess()
