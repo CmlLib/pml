@@ -19,7 +19,6 @@ def arg_in(arg, dicts):
                 args.append(item)
             else:
                 argValue = dicts.get(item[2:-1])  # remove ${  }
-                print(item+">"+argValue)
                 if argValue:
                     args.append(e(argValue))
                 else:
@@ -69,8 +68,8 @@ class launch:
 
         jvmdict = {
             "natives_directory" : e(minecraft.natives),
-            "launcher_name" : "u",
-            "launcher_version" : "h",
+            "launcher_name" : "minecraft-launcher",
+            "launcher_version" : "2",
             "classpath" : libs
         }
 
@@ -122,8 +121,7 @@ class launch:
         return " ".join(args)
 
     def createProcess(self):
-        native = mnative.native(self.launchOption)
-        native.cleanNatives()
-        native.createNatives()
+        mnative.clean_natives()
+        mnative.extract_natives(self.launchOption.start_profile)
 
         return self.createArg()

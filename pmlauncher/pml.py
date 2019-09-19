@@ -1,4 +1,4 @@
-from pmlauncher import minecraft, mlaunch, mdownloader, mprofile, mlaunchoption, mprofileinfo
+from . import *
 
 profiles = None
 downloadEventHandler = None

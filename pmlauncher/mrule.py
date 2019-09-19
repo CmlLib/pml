@@ -21,17 +21,15 @@ def checkAllowOS(arr):
         containCurrentOS = True
 
         for key, value in job.items():
+
             if key == "action":
                 if value == "allow":
                     action = True
                 else:
                     action = False
+
             elif key == "os":
-                for osKey, osValue in value.items():
-                    if osKey == "name" and osValue == osname:
-                        containCurrentOS = True
-                        break
-                containCurrentOS = False
+                containCurrentOS = check_os_contains(value.items())
 
             elif key == "features":
                 return False
@@ -44,3 +42,8 @@ def checkAllowOS(arr):
             return False
 
 
+def check_os_contains(arr):
+    for osKey, osValue in arr:
+        if osKey == "name" and osValue == osname:
+            return True
+    return False

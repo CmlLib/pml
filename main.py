@@ -68,3 +68,4 @@ with mc.stdout as gameLog:
 
 if mc.returncode:
     print(f"Client returned {mc.returncode}!")
+

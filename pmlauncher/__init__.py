@@ -8,8 +8,9 @@ __all__ = [
     'mlaunch',
     'mlibrary',
     'mlogin',
+    'mrule',
     'mnative',
     'mprofile',
     'mprofileinfo',
-    'pml'
+    
 ]

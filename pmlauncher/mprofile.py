@@ -16,11 +16,13 @@ def arg_parse(arr):
     for item in arr:
         if type(item) == dict:
             allow = True
-            
-            if item.get("rules"):
-                allow = mrule.checkAllowOS(item.get("rules"))
+
+            rule = item.get("rules")            
+            if rule:
+                allow = mrule.checkAllowOS(rule)
 
             value = item.get("value")
+
             if allow and value:
                 if type(value) == list:
                     strlist.extend(value)
