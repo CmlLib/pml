@@ -90,21 +90,14 @@ def parselist(json):
             # native library
             classif = downloads.get("classifiers")
             if classif:
-                isgo = True
-                nativeId = ""
+                native_id = None
+                native_obj = item.get("natives")
+                if native_obj:
+                    native_id = native_obj.get(mrule.osname).replace("${arch}", mrule.arch)
 
-                if classif.get("natives-windows-64") and osname == "windows" and is64bit:
-                    nativeId = "natives-windows-64"
-                if classif.get("natives-windows-32") and osname == "windows":
-                    nativeId = "natives-windows-32"
-                if classif.get("natives-" + mrule.osname):
-                    nativeId = "natives-" + mrule.osname
-                else:
-                    isgo = False
-
-                job = classif.get(nativeId)
-                if isgo:
-                    list.append(createLibrary(name, nativeId, job))
+                if native_id and classif.get(native_id):
+                    job = classif.get(native_id)
+                    list.append(createLibrary(name, native_id, job))
 
             # common library
             arti = downloads.get("artifact")

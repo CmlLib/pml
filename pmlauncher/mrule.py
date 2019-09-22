@@ -4,6 +4,11 @@ import os
 checkOSRules = True
 
 is64bit = platform.machine().endswith('64')
+if is64bit:
+    arch = "64"
+else:
+    arch = "32"
+
 osversion = platform.release()
 osname = ""
 sysname = platform.system()
