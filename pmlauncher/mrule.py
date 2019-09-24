@@ -18,6 +18,7 @@ elif sysname == "Darwin":
     osname = "osx"
 else:
     osname = "windows"
+#osname = "windows"  # fake os to debug
 
 
 def checkAllowOS(arr):

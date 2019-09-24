@@ -1,8 +1,10 @@
 from pmlauncher import mnative, minecraft
 import string
 import os
+import re
 
 supportversion = "1.4"
+pre_compiled = re.compile("\\$\\{(.*?)}")
 
 def e(t):
     if " " in t:
@@ -11,18 +13,31 @@ def e(t):
         return t
 
 
+def ea(t):
+    if " " in t and "=" in t:
+        s = t.split("=")
+        return s[0] + '="' + s[1] + '"'
+    else:
+        return t
+
+
 def arg_in(arg, dicts):
     args = list()
     for item in arg:
         if type(item) is str:
-            if item[0] is not "$":
-                args.append(item)
-            else:
-                argValue = dicts.get(item[2:-1])  # remove ${  }
-                if argValue:
-                    args.append(e(argValue))
+            m = pre_compiled.search(item)  # check ${} str
+            if m:
+                arg_key = m.group()  # get ${KEY}
+                arg_value = dicts.get(arg_key[2:-1])  # get dicts value of ${KEY}
+
+                if arg_value:
+                    args.append(pre_compiled.sub(arg_value, item))  # replace ${} of whole str to dicts value
                 else:
-                    args.append(item)
+                    args.append(item)  # if value of default arg has space, handle whitespace.
+                                           # (ex) -Dos.Version=Windows 10 => -Dos.Version="Windows 10"
+            else:
+                args.append(ea(item))  # not ${} str
+
     return args
 
 
@@ -74,13 +89,13 @@ class launch:
         }
 
         if profile.jvm_arguments:
-            args.append(arg_str(" ".join(profile.jvm_arguments), jvmdict))           
+            args.extend(arg_in(profile.jvm_arguments, jvmdict))
         else:
-            args.extend[
+            args.extend([
                 "-Djava.library.path=",
                 e(minecraft.natives),
                 "-cp",
-                libs]
+                libs])
 
 
         args.append(profile.mainclass)
@@ -89,14 +104,14 @@ class launch:
         gamedict = {
             "auth_player_name" : self.launchOption.session.username,
             "version_name" : profile.id,
-            "game_directory" : minecraft.path,
-            "assets_root" : minecraft.assets,
+            "game_directory" : e(minecraft.path),
+            "assets_root" : e(minecraft.assets),
             "assets_index_name" : profile.assetId,
             "auth_uuid" : self.launchOption.session.uuid,
             "auth_access_token" : self.launchOption.session.access_token,
             "user_properties" : "{}",
             "user_type" : "Mojang",
-            "game_assets" : minecraft.assetLegacy,
+            "game_assets" : e(minecraft.assetLegacy),
             "auth_session" : self.launchOption.session.access_token
         }
 
@@ -118,10 +133,12 @@ class launch:
             args.append("--width " + self.launchOption.screen_width)
             args.append("--height ", self.launchOption.screen_height)
 
-        return " ".join(args)
+        return " ".join(map(str, args))
 
     def createProcess(self):
         mnative.clean_natives()
         mnative.extract_natives(self.launchOption.start_profile)
 
         return self.createArg()
+
+
