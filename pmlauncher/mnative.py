@@ -15,9 +15,11 @@ def extract_natives(profile):
 
 def clean_natives():
     for item in os.listdir(minecraft.natives):
-       if os.path.isfile(item):
+       path = os.path.join(minecraft.natives, item)
+       
+       if os.path.isfile(path):
             try:
-                os.remove(item)
+                os.remove(path)
             except Exception as e:
                 print(e)
 

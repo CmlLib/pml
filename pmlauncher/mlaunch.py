@@ -91,11 +91,8 @@ class launch:
         if profile.jvm_arguments:
             args.extend(arg_in(profile.jvm_arguments, jvmdict))
         else:
-            args.extend([
-                "-Djava.library.path=",
-                e(minecraft.natives),
-                "-cp",
-                libs])
+            args.append("-Djava.library.path=" + e(minecraft.natives))
+            args.append("-cp " + libs)
 
 
         args.append(profile.mainclass)
