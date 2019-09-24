@@ -31,7 +31,7 @@ def arg_in(arg, dicts):
                 arg_value = dicts.get(arg_key[2:-1])  # get dicts value of ${KEY}
 
                 if arg_value:
-                    args.append(pre_compiled.sub(arg_value, item))  # replace ${} of whole str to dicts value
+                    args.append(pre_compiled.sub(arg_value.replace("\\","\\\\"), item))  # replace ${} of whole str to dicts value
                 else:
                     args.append(item)  # if value of default arg has space, handle whitespace.
                                            # (ex) -Dos.Version=Windows 10 => -Dos.Version="Windows 10"
