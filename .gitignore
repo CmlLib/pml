@@ -74,3 +74,5 @@ args.txt
 build/
 dist/
 pmlauncher.egg-info
+.vscode/settings.json
+.vs

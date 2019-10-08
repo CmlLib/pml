@@ -5,8 +5,8 @@ import os
 
 # initialize
 # p = os.environ["appdata"] + "\\.minecraft"  # windows default game directory
-# p = os.getcwd() + "/game"
-p = os.path.abspath("/home/myu/.minecraft")
+p = os.getcwd() + "/game"
+#p = os.path.abspath("/home/myu/.minecraft")
 pml.initialize(p)
 print("Initialized in " + pml.getGamePath())
 

@@ -3,6 +3,7 @@ import requests
 from pmlauncher import minecraft, mevent
 import json
 from shutil import copyfile
+import shutil
 import hashlib
 
 
@@ -15,13 +16,12 @@ def download(url, path):
     dirpath = os.path.dirname(path)
     mkd(dirpath)
 
-    response = requests.get(url)
+    response = requests.get(url, stream=True)
     if int(response.status_code / 100) is not 2:
         return
 
-    f = open(path, "wb")
-    f.write(response.content)
-    f.close()
+    with open(path, 'wb') as f:
+        shutil.copyfileobj(response.raw, f)
 
 
 class mdownload:
@@ -123,7 +123,7 @@ class mdownload:
         if not self.profile.clientDownloadUrl:
             return
 
-        id = self.profile.id
+        id = self.profile.jar
         path = os.path.normpath(minecraft.version + "/" + id + "/" + id + ".jar")
         if not self.checkFileValidation(path, self.profile.clientHash):
             download(self.profile.clientDownloadUrl, path)
