@@ -38,7 +38,6 @@ def downloadProfile(profile, downloadAssets = True):
 
 def startProfile(name, **option):
     profile = getProfile(name)
-    print(profile.jvm_arguments)
     downloadProfile(profile)
 
     l = mlaunchoption.launchoption()

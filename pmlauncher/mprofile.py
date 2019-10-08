@@ -47,7 +47,7 @@ class profile:
         self.clientDownloadUrl = ""
         self.clientHash = ""
         self.parent_profile_id = ""
-        self.is_inherted = False
+        self.is_inherited = False
         self.jar = ""
         self.mainclass = ""
         self.minecraftArguments = ""
@@ -68,38 +68,38 @@ class profile:
         return self.parseFromJson(json)
 
     def parseFromJson(self, content):
-        dict = json.loads(content)
+        d = json.loads(content)
 
-        self.id = dict.get("id")
+        self.id = d.get("id")
 
-        assetIndex = dict.get("assetIndex")
+        assetIndex = d.get("assetIndex")
         if assetIndex:
             self.assetId = n(assetIndex.get("id"))
             self.assetUrl = n(assetIndex.get("url"))
             self.assetHash = n(assetIndex.get("sha1"))
 
-        downloads = dict.get("downloads")
+        downloads = d.get("downloads")
         if downloads:
             client = downloads.get("client")
             if client:
                 self.clientDownloadUrl = client["url"]
                 self.clientHash = client["sha1"]
 
-        self.libraries = mlibrary.parselist(dict.get("libraries"))
-        self.mainclass = n(dict.get("mainClass"))
+        self.libraries = mlibrary.parselist(d.get("libraries"))
+        self.mainclass = n(d.get("mainClass"))
 
-        self.minecraftArguments = dict.get("minecraftArguments")
-        arg = dict.get("arguments")
+        self.minecraftArguments = d.get("minecraftArguments")
+        arg = d.get("arguments")
         if arg:
             if arg.get("game"):
                 self.game_arguments = arg_parse(arg.get("game"))
             if arg.get("jvm"):
                 self.jvm_arguments = arg_parse(arg.get("jvm"))
 
-        self.releaseTime = n(dict.get("releaseTime"))
-        self.type = n(dict.get("type"))
+        self.releaseTime = n(d.get("releaseTime"))
+        self.type = n(d.get("type"))
 
-        inherits = dict.get("inheritsFrom")
+        inherits = d.get("inheritsFrom")
         if inherits:
             self.is_inherited = True
             self.parent_profile_id = inherits
@@ -135,8 +135,8 @@ def inhert(parent, child):
     if not child.clientHash:
         child.clientHash = parent.clientHash
 
-    if not child.mainClass:
-        child.mainClass = parent.mainClass
+    if not child.mainclass:
+        child.mainclass = parent.mainclass
 
     if not child.minecraftArguments:
         child.minecraftArguments = parent.minecraftArguments
@@ -171,7 +171,7 @@ def get_profile(infos, version):
     if start_profile == None:
         raise ValueError("cannot find profile named " + version)
 
-    if start_profile.is_inherted:
+    if start_profile.is_inherited:
         parent_profile = get_profile(infos, start_profile.parent_profile_id)
         inhert(parent_profile, start_profile)
 

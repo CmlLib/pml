@@ -64,8 +64,8 @@ class launch:
         args = list()
 
         # common jvm args
-        if self.launchOption.jvm_args:
-            args.append(self.launchOption.jvm_args)
+        if self.launchOption.jvm_arg:
+            args.append(self.launchOption.jvm_arg)
         else:
             args.append(self.defaultJavaParameter)
 
