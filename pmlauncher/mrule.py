@@ -18,10 +18,12 @@ elif sysname == "Darwin":
     osname = "osx"
 else:
     osname = "windows"
-#osname = "windows"  # fake os to debug
+osname = "osx"  # fake os to debug
 
 
 def checkAllowOS(arr):
+    require = True
+
     for job in arr:
         action = True  # allow / disallow
         containCurrentOS = True
@@ -40,12 +42,14 @@ def checkAllowOS(arr):
             elif key == "features":
                 return False
 
-        if not action and containCurrentOS:
-            return False
-        elif action and containCurrentOS:
-            return True
-        elif action and not containCurrentOS:
-            return False
+        if not action and containCurrentOS:  # disallow os
+            require = False
+        elif action and containCurrentOS:  # allow os
+            require = True
+        elif action and not containCurrentOS:  #
+            require = False
+
+    return require
 
 
 def check_os_contains(arr):

@@ -14,6 +14,7 @@ class mlibrary:
 checkOSRules = True
 defaultLibraryServer = "https://libraries.minecraft.net/"
 
+
 def nameToPath(name, native):  # library name to relative path
     try:
         tmp = name.split(':')
@@ -75,6 +76,8 @@ def parselist(json):
                 if not isRequire:
                     continue
 
+            print(name)
+
             # forge library
             downloads = item.get("downloads")
             if not downloads:  # downloads == null
@@ -93,9 +96,10 @@ def parselist(json):
                 native_id = None
                 native_obj = item.get("natives")
                 if native_obj:
-                    native_id = native_obj.get(mrule.osname).replace("${arch}", mrule.arch)
+                    native_id = native_obj.get(mrule.osname)
 
                 if native_id and classif.get(native_id):
+                    native_id = native_id.replace("${arch}", mrule.arch)
                     job = classif.get(native_id)
                     list.append(createLibrary(name, native_id, job))
 
