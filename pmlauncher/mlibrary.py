@@ -76,8 +76,6 @@ def parselist(json):
                 if not isRequire:
                     continue
 
-            print(name)
-
             # forge library
             downloads = item.get("downloads")
             if not downloads:  # downloads == null
