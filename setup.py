@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pmlauncher",
-    version="0.0.6",
+    version="0.0.7",
     url="https://github.com/AlphaBs/pml",
     license="non commercial",
     author="ksi123456ab",
