@@ -93,8 +93,13 @@ class mdownload:
 
         isVirtual = False
         v = index.get("virtual")
-        if v and v == "true":
+        if v and v == True:
             isVirtual = True
+
+        isMapResource = False
+        m = index.get("map_to_resources")
+        if m and m == True:
+            isMapResource = True
 
         items = list(index.get("objects").items())
         count = len(items)
@@ -116,6 +121,15 @@ class mdownload:
                 if not os.path.isfile(resPath):
                     mkd(os.path.dirname(resPath))
                     copyfile(hashPath, resPath)
+                print(resPath)
+
+            if isMapResource:
+                resPath = os.path.normpath(minecraft.resources + "/" + key)
+
+                if not os.path.isfile(resPath):
+                    mkd(os.path.dirname(resPath))
+                    copyfile(hashPath, resPath)
+                print(resPath)
 
             self.fireEvent("resource", "", count, i + 1)
 

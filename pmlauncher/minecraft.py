@@ -7,11 +7,12 @@ assets = ""
 index = ""
 assetObject = ""
 assetLegacy = ""
+resources = ""
 natives = ""
 
 
 def initialize(_path):
-    global path, library, version, assets, index, assetObject, assetLegacy, natives
+    global path, library, version, assets, index, assetObject, assetLegacy, resources, natives
 
     path = os.path.normpath(_path)
     library = os.path.normpath(path + "/libraries")
@@ -20,6 +21,7 @@ def initialize(_path):
     index = os.path.normpath(assets + "/indexes")
     assetObject = os.path.normpath(assets + "/objects")
     assetLegacy = os.path.normpath(assets + "/virtual/legacy")
+    resources = os.path.normpath(path + "/resources")
     natives = os.path.normpath(path + "/natives")
 
     mkd(path)
@@ -28,6 +30,7 @@ def initialize(_path):
     mkd(index)
     mkd(assetLegacy)
     mkd(assetObject)
+    mkd(resources)
     mkd(natives)
 
 
