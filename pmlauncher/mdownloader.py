@@ -121,7 +121,6 @@ class mdownload:
                 if not os.path.isfile(resPath):
                     mkd(os.path.dirname(resPath))
                     copyfile(hashPath, resPath)
-                print(resPath)
 
             if isMapResource:
                 resPath = os.path.normpath(minecraft.resources + "/" + key)
@@ -129,7 +128,6 @@ class mdownload:
                 if not os.path.isfile(resPath):
                     mkd(os.path.dirname(resPath))
                     copyfile(hashPath, resPath)
-                print(resPath)
 
             self.fireEvent("resource", "", count, i + 1)
 
