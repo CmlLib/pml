@@ -19,12 +19,13 @@ def initialize(_path):
     version = m(path + "/versions")
     resources = m(path + "/resources")
     natives = m(path + "/natives")
+    change_assets(path)
 
 
 def change_assets(p):
     global assets, assetLegacy, assetObject, index
 
-    assets = os.path.normpath(path + "/assets")
+    assets = os.path.normpath(p + "/assets")
     index = os.path.normpath(assets + "/indexes")
     assetObject = os.path.normpath(assets + "/objects")
     assetLegacy = os.path.normpath(assets + "/virtual/legacy")
