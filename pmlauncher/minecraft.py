@@ -12,28 +12,27 @@ natives = ""
 
 
 def initialize(_path):
-    global path, library, version, assets, index, assetObject, assetLegacy, resources, natives
+    global path, library, version, resources, natives
 
-    path = os.path.normpath(_path)
-    library = os.path.normpath(path + "/libraries")
-    version = os.path.normpath(path + "/versions")
+    path = m(_path)
+    library = m(path + "/libraries")
+    version = m(path + "/versions")
+    resources = m(path + "/resources")
+    natives = m(path + "/natives")
+
+
+def change_assets(p):
+    global assets, assetLegacy, assetObject, index
+
     assets = os.path.normpath(path + "/assets")
     index = os.path.normpath(assets + "/indexes")
     assetObject = os.path.normpath(assets + "/objects")
     assetLegacy = os.path.normpath(assets + "/virtual/legacy")
-    resources = os.path.normpath(path + "/resources")
-    natives = os.path.normpath(path + "/natives")
-
-    mkd(path)
-    mkd(library)
-    mkd(version)
-    mkd(index)
-    mkd(assetLegacy)
-    mkd(assetObject)
-    mkd(resources)
-    mkd(natives)
 
 
-def mkd(p):
+def m(p):
+    p = os.path.normpath(p)
     if not os.path.isdir(p):
         os.makedirs(p)
+    return p
+
