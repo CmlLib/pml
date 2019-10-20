@@ -1,6 +1,7 @@
 from pmlauncher import pml, mlogin, mlaunchoption
 import subprocess
 import os
+import sys
 
 
 # initialize
@@ -60,10 +61,13 @@ print("launched!")
 # write output
 with mc.stdout as gameLog:
     while True:
-        line = gameLog.readline()
-        if not line:
-            break
-        print(line)
+        try:
+            line = gameLog.readline()
+            if not line:
+                break
+            print(line.decode(sys.getdefaultencoding()))
+        except:
+            pass
 
 if mc.returncode:
     print(f"Client returned {mc.returncode}!")
