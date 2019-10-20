@@ -1,4 +1,4 @@
-from pmlauncher import mnative, minecraft
+from pmlauncher import mnative, minecraft, mrule
 import string
 import os
 import re
@@ -54,6 +54,8 @@ class launch:
             "-XX:G1ReservePercent=20",
             "-XX:MaxGCPauseMillis=50",
             "-XX:G1HeapRegionSize=16M"])
+        if mrule.osname == "osx":
+            self.defaultJavaParameter += " -XstartOnFirstThread"
 
         option.checkValid()
         self.launchOption = option
