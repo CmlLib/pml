@@ -52,9 +52,7 @@ with open("args.txt", "w") as f:  # for debug
     f.write(args)
 print(args)
 
-# in linux system, use os.system instead of subprocess
-os.system("java " + args)
-#mc = subprocess.Popen("java " + args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=pml.getGamePath())
+mc = subprocess.Popen("java " + args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=pml.getGamePath(), shell=True)
 
 print("launched!")
 
