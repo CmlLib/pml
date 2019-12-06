@@ -33,3 +33,12 @@ install :
 
 check sample script
 [main.py](https://github.com/AlphaBs/pml/blob/master/main.py)
+
+
+Install pycraft
+-------------
+To launch premium minecraft, you have to add ['pyCraft' library](https://github.com/ammaraskar/pyCraft).  
+Download release and unzip the library, and copy files of pyCraft/minecraft directory to pml/pycraft directory
+![주석 2019-12-06 233922](https://user-images.githubusercontent.com/17783561/70331127-2c85c200-1882-11ea-8fc8-8ba221e0b75c.png)
+and check sample script
+[main_login.py](https://github.com/AlphaBs/pml/blob/master/main_login.py)
