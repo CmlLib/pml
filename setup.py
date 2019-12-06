@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pmlauncher",
-    version="0.0.8",
+    version="0.0.9",
     url="https://github.com/AlphaBs/pml",
     license="non commercial",
     author="ksi123456ab",
@@ -27,3 +27,6 @@ setup(
         "Topic :: Games/Entertainment"
     ]
 )
+
+# python setup.py sdist
+# twine upload --skip-existing dist/*

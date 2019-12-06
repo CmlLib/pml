@@ -67,6 +67,12 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+pycraft/networking
+pycraft/__pycache__
+pycraft/__init__.py
+pycraft/authentication.py
+pycraft/compat.py
+pycraft/exceptions.py
 game/
 logs/
 __pycache__
