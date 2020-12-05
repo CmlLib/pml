@@ -130,7 +130,7 @@ class launch:
 
         if self.launchOption.screen_width and self.launchOption.screen_height:
             args.append("--width " + self.launchOption.screen_width)
-            args.append("--height ", self.launchOption.screen_height)
+            args.append("--height " + self.launchOption.screen_height)
 
         return " ".join(map(str, args))
 
